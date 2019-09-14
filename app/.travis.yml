@@ -1,15 +1,11 @@
 language: android
 android:
   components:
-    - build-tools-29.0.2
+    - build-tools-27.0.3
     - android-29
 env:
   global:
-    - ADB_INSTALL_TIMEOUT = 8
+    - ADB_INSTALL_TIMEOUT=8
 
 script:
   - ./gradlew clean assembleDebug assembleRelease testDebug
-
-branches:
-  only:
-    - develop-travis-test
