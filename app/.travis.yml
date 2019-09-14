@@ -11,4 +11,5 @@ script:
   - ./gradlew clean assembleDebug assembleRelease testDebug
 
 branches:
-  - develop-travis-test
+  only:
+    - develop-travis-test
