@@ -2,23 +2,22 @@ package com.sebastianfarias.simplealbum.view.album
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sebastianfarias.simplealbum.data.AlbumTask
 import com.sebastianfarias.simplealbum.R
+import com.sebastianfarias.simplealbum.data.album.AlbumViewModel
 import com.sebastianfarias.simplealbum.model.Album
 import com.sebastianfarias.simplealbum.view.photo.PhotoActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class AlbumActivity : AppCompatActivity() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: AlbumAdapter
+    lateinit var albumViewModel: AlbumViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,26 +28,14 @@ class AlbumActivity : AppCompatActivity() {
         recyclerAdapter = AlbumAdapter({album : Album -> albumItemClicked(album)})
         recyclerView.adapter = recyclerAdapter
 
+        albumViewModel = ViewModelProviders.of(this).get(AlbumViewModel::class.java)
         getAlbumList()
     }
 
     private fun getAlbumList() {
-        var response = AlbumTask()
-        val callback = object : Callback<List<Album>> {
-            override fun onFailure(call: Call<List<Album>>, t: Throwable) {
-                try {
-                    recyclerAdapter.setAlbumListItems(emptyList())
-                } catch(e: Exception){
-                    Log.d("TASK", e.toString())
-                }
-            }
-
-            override fun onResponse(call: Call<List<Album>>, response: Response<List<Album>>) {
-                recyclerAdapter.setAlbumListItems(response.body()!!)
-            }
-        }
-        response.getAlbums(callback)
-
+        albumViewModel.getAlbumList.observe(this, Observer {
+            recyclerAdapter.setAlbumListItems(it)
+        })
     }
 
     private fun albumItemClicked(album : Album){

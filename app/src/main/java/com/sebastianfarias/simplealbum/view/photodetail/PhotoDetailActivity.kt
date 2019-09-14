@@ -4,15 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.sebastianfarias.simplealbum.R
-import com.sebastianfarias.simplealbum.data.AlbumTask
-import com.sebastianfarias.simplealbum.model.Album
 import kotlinx.android.synthetic.main.photo_detail.*
-import kotlinx.android.synthetic.main.photo_list_item.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class PhotoDetailActivity : AppCompatActivity() {
 
