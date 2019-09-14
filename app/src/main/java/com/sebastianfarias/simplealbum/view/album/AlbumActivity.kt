@@ -8,11 +8,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sebastianfarias.simplealbum.R
 import com.sebastianfarias.simplealbum.data.album.AlbumViewModel
 import com.sebastianfarias.simplealbum.model.Album
 import com.sebastianfarias.simplealbum.utils.BaseActivity
 import com.sebastianfarias.simplealbum.view.photo.PhotoActivity
+import kotlinx.android.synthetic.main.album_list.*
+import kotlinx.android.synthetic.main.album_list.swipe_refresh_list
+import kotlinx.android.synthetic.main.photo_list.*
 
 class AlbumActivity : BaseActivity() {
 
@@ -29,13 +33,24 @@ class AlbumActivity : BaseActivity() {
         recyclerAdapter = AlbumAdapter({album : Album -> albumItemClicked(album)})
         recyclerView.adapter = recyclerAdapter
 
+        swipe_refresh_list.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light)
+        swipe_refresh_list.setOnRefreshListener {
+            if(hasInternetConnection()) getAlbumList()
+        }
+
         albumViewModel = ViewModelProviders.of(this).get(AlbumViewModel::class.java)
         if(hasInternetConnection()) getAlbumList()
     }
 
     private fun getAlbumList() {
+        swipe_refresh_list.isRefreshing = true
         albumViewModel.getAlbumList.observe(this, Observer {
             recyclerAdapter.setAlbumListItems(it)
+            swipe_refresh_list.isRefreshing = false
         })
     }
 

@@ -12,7 +12,9 @@ import com.sebastianfarias.simplealbum.data.photo.PhotoViewModelFactory
 import com.sebastianfarias.simplealbum.model.Photo
 import com.sebastianfarias.simplealbum.utils.BaseActivity
 import com.sebastianfarias.simplealbum.view.photodetail.PhotoDetailActivity
+import kotlinx.android.synthetic.main.album_list.*
 import kotlinx.android.synthetic.main.photo_list.*
+import kotlinx.android.synthetic.main.photo_list.swipe_refresh_list
 
 class PhotoActivity : BaseActivity() {
 
@@ -29,6 +31,15 @@ class PhotoActivity : BaseActivity() {
         recyclerAdapter = PhotoAdapter({photo : Photo -> photoItemClicked(photo)})
         recyclerView.adapter = recyclerAdapter
 
+        swipe_refresh_list.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light,
+            android.R.color.holo_red_light)
+        swipe_refresh_list.setOnRefreshListener {
+            if(hasInternetConnection()) getPhotoList()
+        }
+
         var intent = getIntent()
         if (intent.hasExtra(Intent.EXTRA_TEXT)) {
             var idAlbum = intent.getStringExtra(Intent.EXTRA_TEXT)
@@ -41,8 +52,10 @@ class PhotoActivity : BaseActivity() {
     }
 
     private fun getPhotoList() {
+        swipe_refresh_list.isRefreshing = true
         photoViewModel.getPhotoList.observe(this, Observer {
             recyclerAdapter.setPhotoListItems(it)
+            swipe_refresh_list.isRefreshing = false
         })
     }
 
