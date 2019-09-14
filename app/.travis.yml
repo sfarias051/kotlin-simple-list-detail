@@ -9,3 +9,6 @@ env:
 
 script:
   - ./gradlew clean assembleDebug assembleRelease testDebug
+
+branches:
+  - develop-travis-test
