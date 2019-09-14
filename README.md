@@ -11,3 +11,7 @@ Simple List Detail [Album -> Photos -> Photo Detail]
 https://bumptech.github.io/glide/
 - Retrofit
 https://square.github.io/retrofit/
+- Analytics
+https://firebase.google.com/docs/analytics
+- Crashlytics
+https://firebase.google.com/docs/crashlytics
