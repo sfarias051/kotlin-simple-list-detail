@@ -4,4 +4,6 @@
     <string name="photo_list_header">Album Name</string>
     <string name="photo_detail_header">Image Name</string>
 
+    <string name="general_error_connection">No Network Connection</string>
+
 </resources>

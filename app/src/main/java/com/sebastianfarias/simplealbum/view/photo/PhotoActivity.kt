@@ -2,7 +2,6 @@ package com.sebastianfarias.simplealbum.view.photo
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,10 +10,11 @@ import com.sebastianfarias.simplealbum.R
 import com.sebastianfarias.simplealbum.data.photo.PhotoViewModel
 import com.sebastianfarias.simplealbum.data.photo.PhotoViewModelFactory
 import com.sebastianfarias.simplealbum.model.Photo
+import com.sebastianfarias.simplealbum.utils.BaseActivity
 import com.sebastianfarias.simplealbum.view.photodetail.PhotoDetailActivity
 import kotlinx.android.synthetic.main.photo_list.*
 
-class PhotoActivity : AppCompatActivity() {
+class PhotoActivity : BaseActivity() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: PhotoAdapter
@@ -35,7 +35,7 @@ class PhotoActivity : AppCompatActivity() {
             var titleAlbum = intent.getStringExtra(Intent.EXTRA_TITLE)
             tv_photo_list_title.text = titleAlbum
             photoViewModel = ViewModelProviders.of(this, PhotoViewModelFactory(idAlbum)).get(PhotoViewModel::class.java)
-            getPhotoList()
+            if(hasInternetConnection()) getPhotoList()
         }
 
     }

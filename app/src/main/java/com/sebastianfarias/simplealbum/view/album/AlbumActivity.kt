@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sebastianfarias.simplealbum.R
 import com.sebastianfarias.simplealbum.data.album.AlbumViewModel
 import com.sebastianfarias.simplealbum.model.Album
+import com.sebastianfarias.simplealbum.utils.BaseActivity
 import com.sebastianfarias.simplealbum.view.photo.PhotoActivity
 
-class AlbumActivity : AppCompatActivity() {
+class AlbumActivity : BaseActivity() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var recyclerAdapter: AlbumAdapter
@@ -29,7 +30,7 @@ class AlbumActivity : AppCompatActivity() {
         recyclerView.adapter = recyclerAdapter
 
         albumViewModel = ViewModelProviders.of(this).get(AlbumViewModel::class.java)
-        getAlbumList()
+        if(hasInternetConnection()) getAlbumList()
     }
 
     private fun getAlbumList() {
@@ -39,8 +40,6 @@ class AlbumActivity : AppCompatActivity() {
     }
 
     private fun albumItemClicked(album : Album){
-        Toast.makeText(this, "CLICKED : " + album.title, Toast.LENGTH_LONG).show()
-
         val photoActivityIntent = Intent(this, PhotoActivity::class.java)
         photoActivityIntent.putExtra(Intent.EXTRA_TEXT, album.id.toString())
         photoActivityIntent.putExtra(Intent.EXTRA_TITLE, album.title)
