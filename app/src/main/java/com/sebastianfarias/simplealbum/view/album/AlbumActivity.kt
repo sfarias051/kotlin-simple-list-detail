@@ -28,6 +28,8 @@ class AlbumActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.album_list)
 
+        sendAnalyticsData(this.localClassName)
+
         recyclerView = findViewById(R.id.recyclerview_album_list)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerAdapter = AlbumAdapter({album : Album -> albumItemClicked(album)})

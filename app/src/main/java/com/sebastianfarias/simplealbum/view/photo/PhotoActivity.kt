@@ -12,7 +12,6 @@ import com.sebastianfarias.simplealbum.data.photo.PhotoViewModelFactory
 import com.sebastianfarias.simplealbum.model.Photo
 import com.sebastianfarias.simplealbum.utils.BaseActivity
 import com.sebastianfarias.simplealbum.view.photodetail.PhotoDetailActivity
-import kotlinx.android.synthetic.main.album_list.*
 import kotlinx.android.synthetic.main.photo_list.*
 import kotlinx.android.synthetic.main.photo_list.swipe_refresh_list
 
@@ -25,6 +24,8 @@ class PhotoActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.photo_list)
+
+        sendAnalyticsData(this.localClassName)
 
         recyclerView = findViewById(R.id.recyclerview_photo_list)
         recyclerView.layoutManager = LinearLayoutManager(this)
